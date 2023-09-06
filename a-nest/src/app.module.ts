@@ -3,13 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { LoggerModule } from 'nestjs-pino';
-import { UsersModule } from './users/users.module';
-import { WorkspacesModule } from './workspaces/workspaces.module';
-import { ChannelsModule } from './channels/channels.module';
-import { DmsModule } from './dms/dms.module';
 
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), LoggerModule.forRoot(), UsersModule, WorkspacesModule, ChannelsModule, DmsModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), LoggerModule.forRoot()],
   controllers: [AppController],
   providers: [AppService, ConfigService],
 })
