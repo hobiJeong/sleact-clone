@@ -6,12 +6,16 @@ import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
 import passport from 'passport';
 import { setupSwagger } from './config/swagger';
+import { HttpExceptionFilter } from './httpException.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   
   app.useLogger(app.get(Logger));
   const port = process.env.PORT || 3000;
+  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   setupSwagger(app);
 
