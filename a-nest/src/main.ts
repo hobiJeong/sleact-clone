@@ -1,19 +1,22 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Logger } from 'nestjs-pino';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
-import passport from 'passport';
+import * as passport from 'passport';
 import { setupSwagger } from './config/swagger';
 import { HttpExceptionFilter } from './httpException.filter';
 import { ValidationPipe } from '@nestjs/common';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
-  
-  app.useLogger(app.get(Logger));
+  const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
+  const corsOptions: CorsOptions = {
+    origin: 'http://localhost:3090', // 프론트엔드 주소
+    credentials: true, // 요청에 쿠키 포함 여부 설정 (withCredentials: true)
+  };
+
+  app.enableCors(corsOptions);
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
@@ -30,8 +33,8 @@ async function bootstrap() {
       saveUninitialized: false,
     }),
   );
-  // app.use(passport.initialize());
-  // app.use(passport.session());
+  app.use(passport.initialize());
+  app.use(passport.session());
   await app.listen(port);
   console.log(`listening on port ${port}`);
 }

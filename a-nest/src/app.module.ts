@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -10,6 +10,8 @@ import { ChannelsModule } from './channels/channels.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 import { TypeOrmConfig } from './config/typeorm.config';
+import { AuthModule } from './auth/auth.module';
+import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 dotenv.config();
 
@@ -22,8 +24,13 @@ dotenv.config();
     WorkspacesModule,
     DmsModule,
     ChannelsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}
