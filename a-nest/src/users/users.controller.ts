@@ -1,10 +1,11 @@
-import { Body, Controller, Get, HttpException, Post, Req, Res, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, Post, Req, Res, UseGuards, UseInterceptors } from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserDto } from 'src/common/dto/user.dto';
 import { User } from 'src/common/decorator/user.decorator';
 import { UndefinedToNullInterceptor } from 'src/common/interceptors/undefinedToNull.interceptors';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 
 @UseInterceptors(UndefinedToNullInterceptor)
 @ApiTags('USER')
@@ -37,6 +38,7 @@ export class UsersController {
         description: '서버 에러',
     })
     @ApiOperation({ summary: '로그인' })
+    @UseGuards(LocalAuthGuard)
     @Post('login')
     login(@User() user) {
         return user;
