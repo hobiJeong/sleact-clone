@@ -33,5 +33,12 @@ export class WorkspacesService {
     });
   }
 
-  async createWorkspace(name: string, url: string, myId: number) {}
+  async createWorkspace(name: string, url: string, myId: number) {
+    const workspace = this.workspacesRepository.create({
+      name,
+      url,
+      OwnerId: myId,
+    });
+    const returned = await this.workspacesRepository.save(workspace);
+  }
 }
