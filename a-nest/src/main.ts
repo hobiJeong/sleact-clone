@@ -12,8 +12,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
   const corsOptions: CorsOptions = {
-    origin: 'http://localhost:3090', // 프론트엔드 주소
-    credentials: true, // 요청에 쿠키 포함 여부 설정 (withCredentials: true)
+    origin: true, // 프론트엔드 주소
+    credentials: true, // 요청에 쿠키 포함 여부 설정 (withCredentials : true)
   };
 
   app.enableCors(corsOptions);
@@ -25,7 +25,7 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(
     session({
-      resave: false, 
+      resave: false,
       secret: process.env.COOKIE_SECRET,
       cookie: {
         httpOnly: true,

@@ -8,14 +8,10 @@ import { ChannelMembers } from 'src/entities/ChannelMembers';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      Users,
-      WorkspaceMembers,
-      ChannelMembers,
-    ])
+    TypeOrmModule.forFeature([Users, WorkspaceMembers, ChannelMembers]),
   ],
   providers: [UsersService],
   controllers: [UsersController],
-  exports: [UsersService]
+  exports: [UsersService],
 })
 export class UsersModule {}
