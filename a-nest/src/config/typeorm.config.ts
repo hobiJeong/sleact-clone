@@ -18,18 +18,9 @@ export const TypeOrmConfig: TypeOrmModuleOptions = {
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    entities: [
-      Users,
-      WorkspaceMembers,
-      Workspaces,
-      DMs,
-      Mentions,
-      Channels,
-      ChannelMembers,
-      ChannelChats,
-    ],
+    entities: [Users, WorkspaceMembers, Workspaces, DMs, Mentions, Channels, ChannelMembers, ChannelChats],
     keepConnectionAlive: true,
-    logging: true,
+    logging: process.env.NODE_ENV !== 'production',
     synchronize: false,
     charset: 'utf8mb4',
-  };
+};
