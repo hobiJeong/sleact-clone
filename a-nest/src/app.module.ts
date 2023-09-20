@@ -12,6 +12,8 @@ import * as dotenv from 'dotenv';
 import { TypeOrmConfig } from './config/typeorm.config';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { EventsGateway } from './events/events.gateway';
+import { EventsModule } from './events/events.module';
 
 dotenv.config();
 
@@ -25,9 +27,10 @@ dotenv.config();
         DmsModule,
         ChannelsModule,
         AuthModule,
+        EventsModule,
     ],
     controllers: [AppController],
-    providers: [AppService, ConfigService],
+    providers: [AppService, ConfigService, EventsGateway],
 })
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): any {

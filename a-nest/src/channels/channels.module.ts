@@ -7,9 +7,11 @@ import { ChannelChats } from 'src/entities/ChannelChats';
 import { Users } from 'src/entities/Users';
 import { Channels } from 'src/entities/Channels';
 import { Workspaces } from 'src/entities/Workspaces';
+import { EventsGateway } from 'src/events/events.gateway';
+import { EventsModule } from 'src/events/events.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Channels, ChannelMembers, ChannelChats, Users, Workspaces])],
+    imports: [TypeOrmModule.forFeature([Channels, ChannelMembers, ChannelChats, Users, Workspaces]), EventsModule],
     controllers: [ChannelsController],
     providers: [ChannelsService],
 })
