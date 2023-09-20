@@ -1,1 +1,1 @@
-export class onlineMap {}
+export const onlineMap = {};
