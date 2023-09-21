@@ -76,6 +76,7 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
 
     @SubscribeMessage('login')
     handleLogin(@MessageBody() data: { id: number; channels: number[] }, @ConnectedSocket() socket: Socket) {
+        console.log('testetsetset', data);
         const newNamespace = socket.nsp;
         console.log('login', newNamespace);
         onlineMap[socket.nsp.name][socket.id] = data.id;
