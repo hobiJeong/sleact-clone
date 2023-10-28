@@ -51,6 +51,7 @@ export class ChannelsController {
     @ApiOperation({ summary: '워크스페이스 채널 만들기' })
     @Post(':url/channels')
     async createWorkspaceChannels(@Param('url') url, @Body() body: CreateChannelDto, @User() user: Users) {
+        
         return this.channelsService.createWorkspaceChannels(url, body.name, user.id);
     }
 
